@@ -1,0 +1,69 @@
+homeassistant:
+  host: localhost
+  port: 8123
+  access_token: ACCESS_TOKEN
+shpi:
+  backlight: './backlight'
+rooms:
+  - name: home
+    icon: "home"
+    cards:
+      - type: weather
+        name: Wetter
+        provider: homeassistant
+        entity_id: weather.home
+      - type: door
+        name: Türklingel
+        opener:
+          provider: homeassistant
+          entity_id: switch.ac
+        camera:
+          provider: homeassistant
+          entity_id: camera.demo_camera
+      #- type: garbage
+      #  name: Abfallkalender
+      #  provider: ical
+      #  url: http://example.org
+      #  filter:
+      #    blue: PPK
+      #    grey: Restabfall
+      #    yellow: LVP
+      #    brown: Bio
+  - name: living
+    icon: "sofa"
+    cards:
+      - type: lights
+        name: Licht
+        entities:
+          - name: Deckenlicht
+            provider: homeassistant
+            entity_id: switch.switch_1
+            icon: "lightbulb"
+          - name: Lampe
+            provider: homeassistant
+            entity_id: light.ceiling_lights
+            icon: "lamp"
+      - type: thermostat
+        name: Heizung
+        provider: homeassistant
+        entity_id: climate.thermostat
+        unit_of_measurement: °C
+        sensors:
+          - name: Aktuelle Temperatur
+            provider: homeassistant
+            entity_id: sensor.thermostat_temperature
+            icon: "thermometer"
+          - name: Batterie
+            provider: homeassistant
+            entity_id: sensor.thermostat_battery
+            icon: "battery"
+        controls:
+          - type: temperature
+            value: 30
+            icon: fire
+            color: "#E74C3C"
+          - type: temperature
+            value: 4
+            icon: snowflake
+            color: "#3498DB"
+  
