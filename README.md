@@ -63,6 +63,9 @@ mouse = mouse
 ### Configure DashZero
 Copy `config.example.yaml` to `config.yaml` and edit the `config.yaml` file to fit your needs. A description how to configure DashZero in detail will follow soon.
 
+### Start DashZero
+`python3 main.py`
+
 
 # Support me / Follow me
 [![Web](https://img.shields.io/badge/www-panbachi.de-blue.svg?style=flat-square&colorB=3d72a8&colorA=333333)](https://www.panbachi.de)
