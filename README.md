@@ -8,6 +8,9 @@
 
 dashzero is a small customizable smart home dashboard for (but not only) the Raspberry Pi Zero. The idea was to run a home-assistant UI on the SHPI.zero (which uses a Raspberry Pi Zero). As the Raspberry Pi Zero is too slow to run the home-assistant UI in a browser, I decided to write my own UI.
 
+## Demo
+[![DashZero DEMO](https://img.youtube.com/vi/teUpy-NQuOI/0.jpg)](https://youtu.be/teUpy-NQuOI)
+
 ## Features
 dashzero is fully (or will be) customizable. You can configure it by simply change the config.yaml file.
 
