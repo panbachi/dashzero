@@ -1,0 +1,7 @@
+singleton Fonts 1.0 ./qml/Fonts.qml
+singleton Icons 1.0 ./qml/Icons.qml
+ConnectorHomeAssistant 1.0 ./qml/Connectors/HomeAssistant.qml
+RoomNavigationButton ./qml/RoomNavigationButton.qml
+MainNavigationButton ./qml/MainNavigationButton.qml
+Room ./qml/Room.qml
+Cards/ThermostatControl ./qml/Cards/ThermostatControl.qml
