@@ -1,10 +1,48 @@
-homeassistant:
-  host: localhost
-  port: 8123
-  access_token: ACCESS_TOKEN
-shpi:
-  backlight: './backlight'
+connectors:
+  #homeassistant:
+  #  host: HOST
+  #  port: 8123
+  #  access_token: ACCESS_TOKEN
+hardware:
+    type: shpi
+    model: one
+core:
+  temperature: "celsius"
 rooms:
+  - name: SHPI
+    icon: "home"
+    cards:
+      - type: entities
+        name: SHPI
+        entities:
+          - name: Luftqualität
+            connector: shpi
+            entity_id: sensor.airquality
+            icon: "air-filter"
+          - name: Temperatur
+            connector: shpi
+            entity_id: sensor.temperature
+            icon: "thermometer"
+          - name: Strom
+            connector: shpi
+            entity_id: sensor.current
+            icon: "current-dc"
+          - name: Lüfter
+            connector: shpi
+            entity_id: fan.main
+            icon: "fan"
+          - name: Relay 1
+            connector: shpi
+            entity_id: switch.relay_1
+            icon: "power-socket-de"
+          - name: Relay 2
+            connector: shpi
+            entity_id: switch.relay_2
+            icon: "power-socket-de"
+          - name: Relay 3
+            connector: shpi
+            entity_id: switch.relay_3
+            icon: "power-socket-de"
   - name: home
     icon: "home"
     cards:
