@@ -14,8 +14,8 @@ Page {
 
         anchors.fill: parent // GridLayout must have the right size now
         anchors.margins: 10
-        rows: 3
-        columns: 4
+        //rows: 3
+        columns: 5
         columnSpacing: 10
         rowSpacing: 10
         //spacing: 6
