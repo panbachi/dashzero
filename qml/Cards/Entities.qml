@@ -21,8 +21,8 @@ Page {
                 property var value
                 //property var entity
 
-                width: parent.width
-                height: 110
+                width: entities.width
+                height: 70
 
                 Component.onCompleted: {
                     var elem = '';

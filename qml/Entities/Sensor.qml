@@ -30,7 +30,7 @@ Item {
             height: contentHeight
             verticalAlignment: Text.AlignVCenter
             horizontalAlignment: Text.AlignHCenter
-            font.pointSize: 50
+            font.pointSize: 25
             color: "#BDC3C7"
 
             Layout.preferredWidth: 90
@@ -43,7 +43,7 @@ Item {
         Label {
             Layout.fillWidth: true
             text: name
-            font.pointSize: 25
+            font.pointSize: 20
             height: i.height
             verticalAlignment: Text.AlignVCenter
         }
@@ -52,7 +52,7 @@ Item {
             id: v
 
             text: ''
-            font.pointSize: 20
+            font.pointSize: 15
             height: i.height
             verticalAlignment: Text.AlignVCenter
             horizontalAlignment: Text.AlignRight

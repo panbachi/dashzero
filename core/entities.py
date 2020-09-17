@@ -36,7 +36,10 @@ class Entities(QObject):
 
     @Slot(str, str, str)
     def setState(self, connector, key, value):
-        Storage.instance().connectors().get(connector).setState(key, value)
+        try:
+            Storage.instance().connectors().get(connector).setState(key, value)
+        except Exception:
+            pass
 
     @Slot(str, "QJsonObject")
     @Slot(str, "QVariant")

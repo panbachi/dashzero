@@ -27,12 +27,20 @@ Page {
 
             for(var c in cards) {
                 var icon = '';
-                if (cards[c]['type'] == 'lights') {
-                    icon = 'lightbulb';
-                    card = Qt.createComponent("../qml/Cards/Lights.qml");
-                } else if (cards[c]['type'] == 'entities') {
-                    icon = 'lightbulb';
+                if (cards[c]['type'] == 'entities') {
+                    if (cards[c]['icon']) {
+                        icon = cards[c]['icon'];
+                    } else {
+                        icon = 'format-list-bulleted-type';
+                    }
                     card = Qt.createComponent("../qml/Cards/Entities.qml");
+                } else if (cards[c]['type'] == 'entities-grid') {
+                    if (cards[c]['icon']) {
+                        icon = cards[c]['icon'];
+                    } else {
+                        icon = 'format-list-bulleted-type';
+                    }
+                    card = Qt.createComponent("../qml/Cards/EntitiesGrid.qml");
                 } else if (cards[c]['type'] == 'thermostat') {
                     icon = 'thermometer';
                     card = Qt.createComponent("../qml/Cards/Thermostat.qml");

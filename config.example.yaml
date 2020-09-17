@@ -12,8 +12,17 @@ rooms:
   - name: SHPI
     icon: "home"
     cards:
+      - type: entities-grid
+        name: Grid
+        icon: 'home'
+        entities:
+          - name: Lampe
+            connector: homeassistant
+            entity_id: light.ceiling_lights
+            #bgcolor: '#666666'
       - type: entities
         name: SHPI
+        icon: 'home'
         entities:
           - name: Luftqualität
             connector: shpi

@@ -78,7 +78,7 @@ Page {
         }
 
         Component.onCompleted: {
-            Entities.changedSignal.connect(update);
+            Core.entities().changedSignal.connect(update);
         }
 
         Label {
@@ -110,7 +110,7 @@ Page {
             font.pointSize: 120
 
             Component.onCompleted: {
-                Entities.changedSignal.connect(update);
+                Core.entities().changedSignal.connect(update);
             }
 
             MouseArea {
@@ -118,9 +118,9 @@ Page {
 
                 onClicked: {
                     if(button.state == 'on') {
-                        Entities.setState(card.opener.connector, card.opener.entity_id, 'off');
+                        Core.entities().setState(card.opener.connector, card.opener.entity_id, 'off');
                     } else if(button.state == 'off') {
-                        Entities.setState(card.opener.connector, card.opener.entity_id, 'on');
+                        Core.entities().setState(card.opener.connector, card.opener.entity_id, 'on');
                     }
                 }
             }
