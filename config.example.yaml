@@ -3,6 +3,9 @@ connectors:
   #  host: HOST
   #  port: 8123
   #  access_token: ACCESS_TOKEN
+  #iobroker:
+  #    host: HOST
+  #    port: 8084
 hardware:
     type: shpi
     model: one
