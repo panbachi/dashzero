@@ -41,14 +41,14 @@ ApplicationWindow {
         connectors = Core.connectors()
         entities = Core.entities()
 
-        if(Core.config().get('connectors.homeassistant')) {
+        /*if(Core.config().get('connectors.homeassistant')) {
             var component = Qt.createComponent("Connectors/HomeAssistant.qml");
 
             if (component.status == Component.Ready) {
                 var connector = component.createObject(mainNavigation, {Core: Core});
                 Core.connectors().set('homeassistant', connector);
             }
-        }
+        }*/
 
         var button = Qt.createComponent("MainNavigationButton.qml");
         var room = Qt.createComponent("Room.qml");
@@ -60,6 +60,9 @@ ApplicationWindow {
                 button.createObject(mainNavigation, {subIcon: Icons.get[rooms[r].icon], Core: Core});
                 room.createObject(mainContent, {room: rooms[r], Core: Core});
             }
+
+            console.log('completed view')
+            Core.connectors().start()
         }
     }
 

@@ -45,12 +45,19 @@ if __name__ == '__main__':
     storage = Storage()
     storage.setConfig(Config(config))
     storage.setEntities(Entities())
-    storage.setConnectors(Connectors())
+
+    connectors = Connectors()
+
+    storage.setConnectors(connectors)
     storage.setHardware(Hardware(config))
 
     engine.rootContext().setContextProperty('Core', storage)
 
     engine.load("qml/Main.qml")
+
+
+
+    #connectors.start()
 
     engine.quit.connect(app.quit)
     sys.exit(app.exec_())

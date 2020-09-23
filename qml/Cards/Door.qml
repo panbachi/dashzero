@@ -15,8 +15,8 @@ Page {
         property string initialSource
         property int counter: 0
 
-        function update(connector, key, value) {
-            if(connector == card.camera.connector && key == card.camera.entity_id) {
+        function update(connector, key, type, value) {
+            if(connector == card.camera.connector && key == card.camera.entity_id && type == 'camera') {
                 video.initialSource = value.picture
                 setSource(video.initialSource)
             }
@@ -78,6 +78,7 @@ Page {
         }
 
         Component.onCompleted: {
+            Core.entities().registerEntity(card.camera.connector, card.camera.entity_id, 'camera')
             Core.entities().changedSignal.connect(update);
         }
 
@@ -86,7 +87,7 @@ Page {
 
             property string state
 
-            function update(connector, key, value) {
+            function update(connector, key, type, value) {
                 if(connector == card.opener.connector && key == card.opener.entity_id) {
                     button.state = value.state;
 
@@ -110,6 +111,7 @@ Page {
             font.pointSize: 120
 
             Component.onCompleted: {
+                Core.entities().registerEntity(card.opener.connector, card.opener.entity_id, 'switch')
                 Core.entities().changedSignal.connect(update);
             }
 

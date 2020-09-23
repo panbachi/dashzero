@@ -8,6 +8,18 @@ import "../../."
 Item {
     id: item
 
+    function update(connector, key, type, value) {
+        if(connector == entity.connector && key == entity.entity_id && type == 'light') {
+            if(value.state == 'on') {
+                v.checked = true;
+                i.color = "#F1C40F";
+            } else {
+                v.checked = false;
+                i.color = "#BDC3C7";
+            }
+        }
+    }
+
     property var entity
 
     width: parent.width
@@ -34,18 +46,6 @@ Item {
         Label {
             id: i
 
-            function update(connector, key, value) {
-                if(connector == entity.connector && key == entity.entity_id) {
-                    if(value.state == 'on') {
-                        v.checked = true;
-                        i.color = "#F1C40F";
-                    } else {
-                        v.checked = false;
-                        i.color = "#BDC3C7";
-                    }
-                }
-            }
-
             text: Icons.get[icon]
             font.family: Fonts.icon
             width: 90
@@ -68,9 +68,6 @@ Item {
             }*/
 
 
-            Component.onCompleted: {
-                Core.entities().changedSignal.connect(update)
-            }
         }
 
         Label {
@@ -97,12 +94,17 @@ Item {
 
             onToggled: {
                 if(checked == true) {
-                    Core.entities().setState(entity.connector, entity.entity_id, 'on');
+                    Core.entities().setState(entity.connector, entity.entity_id, 'light', 'on');
                 } else { // if(item.value == 'off') {
-                    Core.entities().setState(entity.connector, entity.entity_id, 'off');
+                    Core.entities().setState(entity.connector, entity.entity_id, 'light', 'off');
                 }
             }
         }
+    }
+
+    Component.onCompleted: {
+        Core.entities().registerEntity(entity.connector, entity.entity_id, 'light')
+        Core.entities().changedSignal.connect(update)
     }
 
 /*

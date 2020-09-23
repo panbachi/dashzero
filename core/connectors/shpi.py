@@ -234,6 +234,8 @@ class SHPI(QObject):
     def __init__(self, config):
         QObject.__init__(self)
         self.config = config
+
+    def start(self):
         self.__update_timer = QTimer(self)
         self.__update_timer.setInterval(2000)
         self.__update_timer.timeout.connect(self.read_initial_states)
@@ -320,8 +322,8 @@ class SHPI(QObject):
         current_time = time.strftime("%H:%M")
 
         Storage.instance().entities().changeState(
-            'shpi', {
-                'entity_id': 'sensor.current_time',
+            'shpi', 'current_time', 'sensor', {
+                'entity_id': 'current_time',
                 'state': current_time,
                 'unit': ''
             })
@@ -330,8 +332,8 @@ class SHPI(QObject):
         gpu_temperature = round(float(os.popen("vcgencmd measure_temp").readline()[5:-3]), 1)
 
         Storage.instance().entities().changeState(
-            'shpi', {
-                'entity_id': 'sensor.gpu_temperature',
+            'shpi', 'gpu_temperature', 'sensor', {
+                'entity_id': 'gpu_temperature',
                 'state': gpu_temperature,
                 'unit': '°C'
             })
@@ -340,8 +342,8 @@ class SHPI(QObject):
         cpu_temperature = round(float(os.popen("cat /sys/class/thermal/thermal_zone0/temp").readline()) / 1000, 1)
 
         Storage.instance().entities().changeState(
-            'shpi', {
-                'entity_id': 'sensor.cpu_temperature',
+            'shpi', 'cpu_temperature', 'sensor', {
+                'entity_id': 'cpu_temperature',
                 'state': cpu_temperature,
                 'unit': '°C'
             })
@@ -358,8 +360,8 @@ class SHPI(QObject):
                 sht_humidity = round(100 * (data[3] * 256 + data[4]) / 65535.0, 1)
 
                 Storage.instance().entities().changeState(
-                    'shpi', {
-                        'entity_id': 'sensor.sht_temperature',
+                    'shpi', 'sht_temperature', 'sensor', {
+                        'entity_id': 'sht_temperature',
                         'state': sht_temperature,
                         'unit': '°C'
                     })
@@ -367,8 +369,8 @@ class SHPI(QObject):
                 self.sht_temperature = sht_temperature
 
                 Storage.instance().entities().changeState(
-                    'shpi', {
-                        'entity_id': 'sensor.sht_humidity',
+                    'shpi', 'sht_humidity', 'sensor', {
+                        'entity_id': 'sht_humidity',
                         'state': sht_humidity,
                         'unit': '%'
                     })
@@ -409,15 +411,15 @@ class SHPI(QObject):
                     bmp_pressure = round((p + (var1 + var2 + (self.dig_P[6])) / 16.0) / 100, 2)
 
                     Storage.instance().entities().changeState(
-                        'shpi', {
-                            'entity_id': 'sensor.bmp_temperature',
+                        'shpi', 'bmp_temperature', 'sensor', {
+                            'entity_id': 'bmp_temperature',
                             'state': bmp_temperature,
                             'unit': '°C'
                         })
 
                     Storage.instance().entities().changeState(
-                        'shpi', {
-                            'entity_id': 'sensor.bmp_pressure',
+                        'shpi', 'bmp_pressure', 'sensor', {
+                            'entity_id': 'bmp_pressure',
                             'state': bmp_pressure,
                             'unit': 'hPa'
                         })
@@ -432,8 +434,8 @@ class SHPI(QObject):
             try:
                 atmega32u4_relay1current = factor * (self.bus.read_two_bytes(self.ADDR_32U4, self.READ_RELAY1CURRENT) - 2)
                 Storage.instance().entities().changeState(
-                    'shpi', {
-                        'entity_id': 'sensor.atmega_relay1current',
+                    'shpi', 'atmega_relay1current', 'sensor', {
+                        'entity_id': 'atmega_relay1current',
                         'state': atmega32u4_relay1current,
                         'unit': 'A'
                     })
@@ -456,30 +458,30 @@ class SHPI(QObject):
 
 
             Storage.instance().entities().changeState(
-                'shpi', {
-                    'entity_id': 'sensor.atmega_temperature',
+                'shpi', 'atmega_temperature', 'sensor', {
+                    'entity_id': 'atmega_temperature',
                     'state': atmega32u4_temperature,
                     'unit': '°C'
                 })
 
             Storage.instance().entities().changeState(
-                'shpi', {
-                    'entity_id': 'sensor.atmega_volt',
+                'shpi', 'atmega_volt', 'sensor', {
+                    'entity_id': 'atmega_volt',
                     'state': atmega32u4_volt,
                     'unit': 'V'
                 })
 
             Storage.instance().entities().changeState(
-                'shpi', {
-                    'entity_id': 'sensor.atmega_airquality',
+                'shpi', 'atmega_airquality', 'sensor', {
+                    'entity_id': 'atmega_airquality',
                     'state': atmega32u4_airquality,
                     'unit': '%'
                 })
 
     def get_temperature(self):
         Storage.instance().entities().changeState(
-            'shpi', {
-                'entity_id': 'sensor.temperature',
+            'shpi', 'temperature', 'sensor', {
+                'entity_id': 'temperature',
                 'state': (self.sht_temperature + self.bmp_temperature) / 2,
                 'unit': '°C'
             })
@@ -563,25 +565,25 @@ class SHPI(QObject):
 
     @Slot(str, "QVariant")
     def setState(self, entityId, state):
-        if entityId == 'fan.main':
+        if entityId == 'main':
             if state == 'on':
                 self.turn_on_fan()
             else:
                 self.turn_off_fan()
 
-        if entityId == 'switch.relay_1':
+        if entityId == 'relay_1':
             if state == 'on':
                 self.turn_on_relay_1()
             else:
                 self.turn_off_relay_1()
 
-        if entityId == 'switch.relay_2':
+        if entityId == 'relay_2':
             if state == 'on':
                 self.turn_on_relay_2()
             else:
                 self.turn_off_relay_2()
 
-        if entityId == 'switch.relay_3':
+        if entityId == 'relay_3':
             if state == 'on':
                 self.turn_on_relay_3()
             else:

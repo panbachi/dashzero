@@ -19,8 +19,8 @@ Page {
 
             property var unit
 
-            function update(connector, key, value) {
-                if(connector == card.connector && key == card.entity_id) {
+            function update(connector, key, type, value) {
+                if(connector == card.connector && key == card.entity_id && type == 'climate') {
                     var temperature = '°C';
                     if(unit == 'fahrenheit') {
                         temperature = '°F';
@@ -41,6 +41,7 @@ Page {
             textFormat: Text.RichText
 
             Component.onCompleted: {
+                Core.entities().registerEntity(card.connector, card.entity_id, 'climate')
                 unit = config.get('core.temperature')
                 Core.entities().changedSignal.connect(update)
             }
@@ -56,7 +57,7 @@ Page {
             font.pointSize: 80
             flat: true
 
-            Material.foreground: Material.Red
+            Material.foreground: Material.Blue
 
             onClicked: {
                 console.log('Minus')
@@ -72,7 +73,7 @@ Page {
             height: 100
             font.pointSize: 80
             flat: true
-            Material.foreground: Material.Blue
+            Material.foreground: Material.Red
 
             onClicked: {
                 console.log('Plus')
@@ -119,8 +120,8 @@ Page {
                                 Label {
                                     id: val
 
-                                    function update(connector, key, value) {
-                                        if(connector == sensor.connector && key == sensor.entity_id) {
+                                    function update(connector, key, type, value) {
+                                        if(connector == sensor.connector && key == sensor.entity_id && type == 'sensor') {
                                             val.text = value.state + ' ' + value.unit;
                                         }
                                     }
@@ -129,6 +130,7 @@ Page {
                                     font.pointSize: 12
 
                                     Component.onCompleted: {
+                                        Core.entities().registerEntity(sensor.connector, sensor.entity_id, 'sensor')
                                         Core.entities().changedSignal.connect(update)
                                     }
                                 }
@@ -169,5 +171,6 @@ Page {
 
     Component.onCompleted: {
         config = Core.config();
+        Core.entities().registerEntity(card.connector, card.entity_id, 'climate')
     }
 }

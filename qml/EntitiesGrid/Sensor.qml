@@ -17,8 +17,8 @@ Pane {
     Material.elevation: 1
     //Material.background: Material.color(Material.Red, Material.Shade800)
 
-    function update(connector, key, value) {
-        if(connector == entity.connector && key == entity.entity_id) {
+    function update(connector, key, type, value) {
+        if(connector == entity.connector && key == entity.entity_id && type == 'sensor') {
             var unit = value.unit || '';
             v.text = value.state + ' ' + unit;
         }
@@ -61,6 +61,7 @@ Pane {
 
 
     Component.onCompleted: {
+        Core.entities().registerEntity(entity.connector, entity.entity_id, 'sensor')
         Core.entities().changedSignal.connect(update)
 
         if(entity.bgcolor) {

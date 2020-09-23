@@ -7,6 +7,13 @@ import "../../."
 Item {
     id: item
 
+    function update(connector, key, type, value) {
+        if(connector == entity.connector && key == entity.entity_id && type == 'sensor') {
+            var unit = value.unit || '';
+            v.text = value.state + ' ' + unit;
+        }
+    }
+
     width: parent.width
     height: parent.height
 
@@ -16,13 +23,6 @@ Item {
 
         Label {
             id: i
-
-            function update(connector, key, value) {
-                if(connector == entity.connector && key == entity.entity_id) {
-                    var unit = value.unit || '';
-                    v.text = value.state + ' ' + unit;
-                }
-            }
 
             text: Icons.get[icon]
             font.family: Fonts.icon
@@ -34,10 +34,6 @@ Item {
             color: "#BDC3C7"
 
             Layout.preferredWidth: 90
-
-            Component.onCompleted: {
-                Core.entities().changedSignal.connect(update)
-            }
         }
 
         Label {
@@ -57,5 +53,10 @@ Item {
             verticalAlignment: Text.AlignVCenter
             horizontalAlignment: Text.AlignRight
         }
+    }
+
+    Component.onCompleted: {
+        Core.entities().registerEntity(entity.connector, entity.entity_id, 'sensor')
+        Core.entities().changedSignal.connect(update)
     }
 }

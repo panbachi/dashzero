@@ -19,8 +19,8 @@ Pane {
     //Material.background: Material.color(Material.Red, Material.Shade800)
 
 
-    function update(connector, key, value) {
-        if(connector == entity.connector && key == entity.entity_id) {
+    function update(connector, key, type, value) {
+        if(connector == entity.connector && key == entity.entity_id && type == 'light') {
             item.state = value.state
 
             if(value.state == 'on') {
@@ -36,9 +36,9 @@ Pane {
 
         onClicked: {
             if(item.state == 'off') {
-                Core.entities().setState(entity.connector, entity.entity_id, 'on');
+                Core.entities().setState(entity.connector, entity.entity_id, 'light', 'on');
             } else { // if(item.value == 'off') {
-                Core.entities().setState(entity.connector, entity.entity_id, 'off');
+                Core.entities().setState(entity.connector, entity.entity_id, 'light', 'off');
             }
         }
 
@@ -82,6 +82,7 @@ Pane {
 
 
     Component.onCompleted: {
+        Core.entities().registerEntity(entity.connector, entity.entity_id, 'light')
         Core.entities().changedSignal.connect(update)
 
         if(entity.bgcolor) {

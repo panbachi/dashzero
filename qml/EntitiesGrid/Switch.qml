@@ -6,21 +6,13 @@ import "../../."
 
 Pane {
     id: item
+
     property var entity
     property var state
 
-    //Layout.fillHeight: true
-    //Layout.fillWidth: true
-    width: parent.width
-    height: parent.height
 
-
-    Material.elevation: 1
-    //Material.background: Material.color(Material.Red, Material.Shade800)
-
-
-    function update(connector, key, value) {
-        if(connector == entity.connector && key == entity.entity_id) {
+    function update(connector, key, type, value) {
+        if(connector == entity.connector && key == entity.entity_id && type == 'switch') {
             item.state = value.state
 
             if(value.state == 'on') {
@@ -31,14 +23,21 @@ Pane {
         }
     }
 
+    width: parent.width
+    height: parent.height
+
+
+    Material.elevation: 1
+    //Material.background: Material.color(Material.Red, Material.Shade800)
+
     MouseArea {
         anchors.fill: parent
 
         onClicked: {
             if(item.state == 'off') {
-                Core.entities().setState(entity.connector, entity.entity_id, 'on');
+                Core.entities().setState(entity.connector, entity.entity_id, 'switch', 'on');
             } else { // if(item.value == 'off') {
-                Core.entities().setState(entity.connector, entity.entity_id, 'off');
+                Core.entities().setState(entity.connector, entity.entity_id, 'switch', 'off');
             }
         }
 
@@ -82,6 +81,7 @@ Pane {
 
 
     Component.onCompleted: {
+        Core.entities().registerEntity(entity.connector, entity.entity_id, 'switch')
         Core.entities().changedSignal.connect(update)
 
         if(entity.bgcolor) {

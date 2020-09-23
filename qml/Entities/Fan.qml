@@ -7,6 +7,16 @@ import "../../."
 Item {
     id: item
 
+    function update(connector, key, type, value) {
+        if(connector == entity.connector && key == entity.entity_id && type == 'fan') {
+            if(value.state == 'on') {
+                v.checked = true;
+            } else {
+                v.checked = false;
+            }
+        }
+    }
+
     property var entity
 
     width: parent.width
@@ -19,16 +29,6 @@ Item {
         Label {
             id: i
 
-            function update(connector, key, value) {
-                if(connector == entity.connector && key == entity.entity_id) {
-                    if(value.state == 'on') {
-                        v.checked = true;
-                    } else {
-                        v.checked = false;
-                    }
-                }
-            }
-
             text: Icons.get[icon]
             font.family: Fonts.icon
             width: 90
@@ -39,10 +39,6 @@ Item {
             color: "#BDC3C7"
 
             Layout.preferredWidth: 90
-
-            Component.onCompleted: {
-                Core.entities().changedSignal.connect(update)
-            }
         }
 
         Label {
@@ -60,11 +56,16 @@ Item {
 
             onToggled: {
                 if(checked == true) {
-                    Core.entities().setState(entity.connector, entity.entity_id, 'on');
+                    Core.entities().setState(entity.connector, entity.entity_id, 'fan', 'on');
                 } else { // if(item.value == 'off') {
-                    Core.entities().setState(entity.connector, entity.entity_id, 'off');
+                    Core.entities().setState(entity.connector, entity.entity_id, 'fan', 'off');
                 }
             }
         }
+    }
+
+    Component.onCompleted: {
+        Core.entities().registerEntity(entity.connector, entity.entity_id, 'fan')
+        Core.entities().changedSignal.connect(update)
     }
 }

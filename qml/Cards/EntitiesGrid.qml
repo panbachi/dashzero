@@ -46,13 +46,13 @@ Page {
 
                     Component.onCompleted: {
                         var elem = '';
-                        var type = entity.entity_id.split('.')[0];
+                        var type = entity.type;
 
-                        if (type == 'light') {
+                        /*if (type == 'light') {
                             elem = Qt.createComponent("../EntitiesGrid/Light.qml");
                         } else if (type == 'fan') {
                             elem = Qt.createComponent("../EntitiesGrid/Fan.qml");
-                        } else if (type == 'sensor') {
+                        } else */if (type == 'sensor') {
                             elem = Qt.createComponent("../EntitiesGrid/Sensor.qml");
                         } else if (type == 'switch') {
                             elem = Qt.createComponent("../EntitiesGrid/Switch.qml");
