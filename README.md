@@ -35,6 +35,7 @@ For now DashZero only works with Home-Assistant and ioBroker, but its prepared t
 python3 -m pip install pyyaml
 python3 -m pip install websocket_client
 python3 -m pip install dateparser
+python3 -m pip install "python-socketio[client]"
 (and perhaps some more :)...)
 ```
 
